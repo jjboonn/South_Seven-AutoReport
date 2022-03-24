@@ -104,12 +104,11 @@ class Report(object):
             return flag
         else:
             print("Report SUCCESSFUL!")
-       
+'''       
         # 自动出校报备
         ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i")
         #print(ret.status_code)
-        #print(ret.url)
-'''        
+        #print(ret.url)      
         if (ret.status_code == 200):
             #每日报备
             print("开始例行报备.")
