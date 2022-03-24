@@ -104,7 +104,7 @@ class Report(object):
             return flag
         else:
             print("Report SUCCESSFUL!")
-'''       
+       
         # 自动出校报备
         ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i")
         #print(ret.status_code)
@@ -140,7 +140,7 @@ class Report(object):
             #出错
             return False
         return True
-'''
+
 
     def login(self):
         retries = Retry(total=5,
