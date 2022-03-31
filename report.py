@@ -96,12 +96,12 @@ class Report(object):
             print(delta)
             print("Delta_Negative is ")
             print(delta_nega)
-            if delta.seconds < 120 or delta_nega.seconds < 120:
+            if delta.total_seconds() < 120 or delta_nega.total_seconds() < 120:
                 flag = True
-            if delta.seconds < delta_nega.seconds:
-                print("{} second(s) before.".format(delta.seconds))
+            if delta.total_seconds() < delta_nega.total_seconds():
+                print("{} second(s) before.".format(delta.total_seconds()))
             else:
-                print("{} second(s) before.".format(delta_nega.seconds))
+                print("{} second(s) before.".format(delta_nega.total_seconds()))
         if flag == False:
             print("Report FAILED!")
             print("健康打卡失败, 取消例行报备!")
