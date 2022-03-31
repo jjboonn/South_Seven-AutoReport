@@ -91,17 +91,24 @@ class Report(object):
             timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
             print("Nowtime : " + format(timenow))
             delta = timenow - reporttime
-            delta_nega = reporttime - timenow
+            #delta_nega = reporttime - timenow
             print("Delta is ")
             print(delta)
-            print("Delta_Negative is ")
-            print(delta_nega)
+            
+            #print("Delta_Negative is ")
+            #print(delta_nega)
+            '''
             if delta.total_seconds() < 120 or delta_nega.total_seconds() < 120:
                 flag = True
             if delta.total_seconds() < delta_nega.total_seconds():
                 print("{} second(s) before.".format(delta.total_seconds()))
             else:
                 print("{} second(s) before.".format(delta_nega.total_seconds()))
+            '''
+            if delta.total_seconds() < 120
+                flag = True
+            print("{} second(s) before.".format(delta.total_seconds())
+            
         if flag == False:
             print("Report FAILED!")
             print("健康打卡失败, 取消例行报备!")
