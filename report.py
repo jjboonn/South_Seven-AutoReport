@@ -17,13 +17,15 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 CAS_RETURN_URL = "https://weixine.ustc.edu.cn/2020/caslogin"
 class Report(object):
-    def __init__(self, stuid, password, data_path, emer_person, relation, emer_phone):
+    def __init__(self, stuid, password, data_path, emer_person, relation, emer_phone, dorm_building, dorm):
         self.stuid = stuid
         self.password = password
         self.data_path = data_path
         self.emer_person = emer_person
         self.relation = relation
         self.emer_phone = emer_phone
+        self.dorm_building = dorm_building
+        self.dorm = dorm
 
     def report(self):
         loginsuccess = False
@@ -194,8 +196,10 @@ if __name__ == "__main__":
     parser.add_argument('emer_person', help='emergency person', type=str)
     parser.add_argument('relation', help='relationship between you and he/she', type=str)
     parser.add_argument('emer_phone', help='phone number', type=str)
+    parser.add_argument('dorm_building', help='dormbuilding', type=str)
+    parser.add_argument('dorm', help='dorm number', type=str)
     args = parser.parse_args()
-    autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone)
+    autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone, dorm_building=args.dorm_building, dorm=args.dorm)
     count = 5
     while count != 0:
         ret = autorepoter.report()
