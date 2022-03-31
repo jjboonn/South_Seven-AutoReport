@@ -107,7 +107,7 @@ class Report(object):
             '''
             if delta.total_seconds() < 120:
                 flag = True
-            print("{} second(s) before.".format(delta.total_seconds())
+            print("{} second(s) before.".format(delta.total_seconds()))
             
         if flag == False:
             print("Report FAILED!")
