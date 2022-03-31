@@ -54,6 +54,8 @@ class Report(object):
             data["jinji_lxr"]=self.emer_person
             data["jinji_guanxi"]=self.relation
             data["jiji_mobile"]=self.emer_phone
+            data["dorm_building"]=self.dorm_building
+            data["dorm"]=self.dorm
             data["_token"]=token
         #print(data)
 
