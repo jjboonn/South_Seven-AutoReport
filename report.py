@@ -105,7 +105,7 @@ class Report(object):
             else:
                 print("{} second(s) before.".format(delta_nega.total_seconds()))
             '''
-            if delta.total_seconds() < 120
+            if delta.total_seconds() < 120:
                 flag = True
             print("{} second(s) before.".format(delta.total_seconds())
             
