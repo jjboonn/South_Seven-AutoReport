@@ -224,3 +224,4 @@ if __name__ == "__main__":
     else:
         exit(-1)
     '''
+    autorepoter.report()
