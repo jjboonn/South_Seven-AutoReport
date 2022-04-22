@@ -1,4 +1,4 @@
-# encoding=utf8
+# encoding=utf8 
 import requests
 import json
 import time
@@ -69,61 +69,13 @@ class Report(object):
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'referer': 'https://weixine.ustc.edu.cn/2020/home',
             'accept-language': 'zh-CN,zh;q=0.9',
-            'Connection': 'close',
             'cookie': "PHPSESSID=" + cookies.get("PHPSESSID") + ";XSRF-TOKEN=" + cookies.get("XSRF-TOKEN") + ";laravel_session="+cookies.get("laravel_session"),
         }
 
         url = "https://weixine.ustc.edu.cn/2020/daliy_report"
         resp=session.post(url, data=data, headers=headers)
         print(resp)
-        
-       ''' 
-        data = session.get("https://weixine.ustc.edu.cn/2020").text
-        soup = BeautifulSoup(data, 'html.parser')
-        pattern = re.compile("202[0-9]-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}")
-        token = soup.find(
-            "span", {"style": "position: relative; top: 5px; color: #666;"})
-        
-        
-        
-        flag = False
-        if pattern.search(token.text) is not None:
-            date = pattern.search(token.text).group()
-            print("Latest report: " + date)
-            date = date + " +0800"
-            reporttime = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S %z")
-            print("Reporttime : " + format(reporttime))
-            timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
-            print("Nowtime : " + format(timenow))
-            delta = timenow - reporttime
-            #delta_nega = reporttime - timenow
-            print("Delta is ")
-            print(delta)
-            
-            #print("Delta_Negative is ")
-            #print(delta_nega)
-            [
-            if delta.total_seconds() < 120 or delta_nega.total_seconds() < 120:
-                flag = True
-            if delta.total_seconds() < delta_nega.total_seconds():
-                print("{} second(s) before.".format(delta.total_seconds()))
-            else:
-                print("{} second(s) before.".format(delta_nega.total_seconds()))
-            ]
-            if delta.total_seconds() < 120:
-                flag = True
-            print("{} second(s) before.".format(delta.total_seconds()))
-            
-        if flag == False:
-            print("Report FAILED!")
-            print("健康打卡失败, 取消例行报备!")
-            return flag
-        else:
-            print("Report SUCCESSFUL!")
-        '''
-        '''
         res = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3", allow_redirects=False)
-        print(res.status_code)
         if(res.status_code == 302):
             print("report failed!")
             return False
@@ -133,12 +85,13 @@ class Report(object):
         else:
             print("unknown error, code: "+str(res.status_code))
             return False
-        '''   
         '''
         # 自动出校报备
-        ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i")
+        ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3")
         #print(ret.status_code)
-        #print(ret.url)      
+        if (ret.url == "https://weixine.ustc.edu.cn/2020/upload/xcm"):
+            print("未上传两码，请手动上传两码或杀了制定这个规则的壬的马。")
+            return True
         if (ret.status_code == 200):
             #每日报备
             print("开始例行报备.")
@@ -152,10 +105,14 @@ class Report(object):
             print("{}---{}".format(start_date, end_date))
 
             REPORT_URL = "https://weixine.ustc.edu.cn/2020/apply/daliy/post"
+            RETURN_COLLEGE = {'东校区', '西校区', '中校区', '南校区', '北校区'}
             REPORT_DATA = {
                 '_token': token2,
                 'start_date': start_date,
-                'end_date': end_date
+                'end_date': end_date,
+                'return_college[]': RETURN_COLLEGE,
+                'reason': "上课/自习",
+                't': 3,
             }
 
             ret = session.post(url=REPORT_URL, data=REPORT_DATA)
@@ -223,13 +180,11 @@ if __name__ == "__main__":
     parser.add_argument('emer_person', help='emergency person', type=str)
     parser.add_argument('relation', help='relationship between you and he/she', type=str)
     parser.add_argument('emer_phone', help='phone number', type=str)
-    parser.add_argument('dorm_building', help='dormbuilding', type=str)
+    parser.add_argument('dorm_building', help='dorm building num', type=str)
     parser.add_argument('dorm', help='dorm number', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone, dorm_building=args.dorm_building, dorm=args.dorm)
-
-    '''
-    count = 1
+    count = 5
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
@@ -240,4 +195,3 @@ if __name__ == "__main__":
         exit(0)
     else:
         exit(-1)
-    '''
