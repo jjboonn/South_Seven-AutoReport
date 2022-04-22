@@ -85,7 +85,7 @@ class Report(object):
             "span", {"style": "position: relative; top: 5px; color: #666;"})
         '''
         
-        '''
+        
         flag = False
         if pattern.search(token.text) is not None:
             date = pattern.search(token.text).group()
@@ -102,14 +102,14 @@ class Report(object):
             
             #print("Delta_Negative is ")
             #print(delta_nega)
-            [
+            '''
             if delta.total_seconds() < 120 or delta_nega.total_seconds() < 120:
                 flag = True
             if delta.total_seconds() < delta_nega.total_seconds():
                 print("{} second(s) before.".format(delta.total_seconds()))
             else:
                 print("{} second(s) before.".format(delta_nega.total_seconds()))
-            ]
+            '''
             if delta.total_seconds() < 120:
                 flag = True
             print("{} second(s) before.".format(delta.total_seconds()))
@@ -120,8 +120,8 @@ class Report(object):
             return flag
         else:
             print("Report SUCCESSFUL!")
-        '''
         
+        '''
         res = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3", allow_redirects=False)
         print(res.status_code)
         if(res.status_code == 302):
@@ -133,7 +133,7 @@ class Report(object):
         else:
             print("unknown error, code: "+str(res.status_code))
             return False
-            
+        '''   
         '''
         # 自动出校报备
         ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i")
