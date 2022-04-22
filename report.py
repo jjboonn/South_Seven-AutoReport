@@ -123,6 +123,7 @@ class Report(object):
         '''
         
         res = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3", allow_redirects=False)
+        print(res.status_code)
         if(res.status_code == 302):
             print("report failed!")
             return False
@@ -227,7 +228,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone, dorm_building=args.dorm_building, dorm=args.dorm)
     
-    count = 5
+    count = 1
     while count != 0:
         ret = autorepoter.report()
         if ret != False:
