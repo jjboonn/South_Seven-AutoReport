@@ -75,16 +75,18 @@ class Report(object):
         url = "https://weixine.ustc.edu.cn/2020/daliy_report"
         resp=session.post(url, data=data, headers=headers)
         print(resp)
-        res = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3", allow_redirects=False)
-        if(res.status_code == 302):
-            print("report failed!")
-            return False
-        elif(res.status_code == 200):
+        res = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3")
+        if(res.status_code < 400 and (res.url == "https://weixine.ustc.edu.cn/2020/upload/xcm" or res.url == "https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3")):
             print("report success!")
             return True
+        elif(res.status_code < 400 and res.url != "https://weixine.ustc.edu.cn/2020/upload/xcm"):
+            print(res.url)
+            print("report failed")
+            return False
         else:
             print("unknown error, code: "+str(res.status_code))
             return False
+            
         '''
         # 自动出校报备
         ret = session.get("https://weixine.ustc.edu.cn/2020/apply/daliy/i?t=3")
@@ -184,7 +186,7 @@ if __name__ == "__main__":
     parser.add_argument('dorm', help='dorm number', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone, dorm_building=args.dorm_building, dorm=args.dorm)
-    '''
+
     count = 5
     while count != 0:
         ret = autorepoter.report()
@@ -196,7 +198,6 @@ if __name__ == "__main__":
         exit(0)
     else:
         exit(-1)
-    '''
-    autorepoter.report()
+
     
     
