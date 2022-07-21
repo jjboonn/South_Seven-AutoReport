@@ -17,7 +17,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 CAS_RETURN_URL = "https://weixine.ustc.edu.cn/2020/caslogin"
 class Report(object):
-    def __init__(self, stuid, password, data_path, emer_person, relation, emer_phone, dorm_building, dorm):
+    def __init__(self, stuid, password, data_path, emer_person, relation, emer_phone, dorm_building, dorm, juzhudi):
         self.stuid = stuid
         self.password = password
         self.data_path = data_path
@@ -26,6 +26,7 @@ class Report(object):
         self.emer_phone = emer_phone
         self.dorm_building = dorm_building
         self.dorm = dorm
+        self.juzhudi = juzhudi
 
     def report(self):
         loginsuccess = False
@@ -57,6 +58,7 @@ class Report(object):
             data["dorm_building"]=self.dorm_building
             data["dorm"]=self.dorm
             data["_token"]=token
+            data["juzhudi"]=self.juzhudi
         #print(data)
 
 
