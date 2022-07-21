@@ -186,6 +186,7 @@ if __name__ == "__main__":
     parser.add_argument('emer_phone', help='phone number', type=str)
     parser.add_argument('dorm_building', help='dorm building num', type=str)
     parser.add_argument('dorm', help='dorm number', type=str)
+    parser.add_argument('juzhudi', help='home', type=str)
     args = parser.parse_args()
     autorepoter = Report(stuid=args.stuid, password=args.password, data_path=args.data_path, emer_person=args.emer_person, relation=args.relation, emer_phone=args.emer_phone, dorm_building=args.dorm_building, dorm=args.dorm)
 
